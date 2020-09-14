@@ -1,15 +1,9 @@
 name: CD
 
-#on:
-#  push:
-#    tags:
-#      - "v*"
-
 on:
   push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+    tags:
+      - "v*"
 
 defaults:
   run:
@@ -32,6 +26,17 @@ jobs:
           files: libretro/snes9x_libretro.so
           dest: snes9x_libretro.so.zip
 
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: snes9x_libretro.so.zip
+          asset_name: snes9x_libretro.so.zip
+          asset_content_type: application/zip
+
   build_osx:
     runs-on: macos-latest
 
@@ -48,17 +53,6 @@ jobs:
           files: libretro/snes9x_libretro.dylib
           dest: snes9x_libretro.dylib.zip
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
- 
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -86,17 +80,6 @@ jobs:
           files: libretro/snes9x_libretro.dll
           dest: snes9x_libretro.dll.zip
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
- 
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
