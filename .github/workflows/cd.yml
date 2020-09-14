@@ -16,7 +16,7 @@ defaults:
     shell: bash
 
 jobs:
-  build:
+  build_linux:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,7 +31,7 @@ jobs:
         with:
           args: zip -r ./snes9x_libretro.so.zip ./libretro/snes9x_libretro.so
 
-  build:
+  build_osx:
     runs-on: macos-latest
 
     steps:
