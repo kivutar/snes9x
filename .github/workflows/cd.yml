@@ -31,6 +31,22 @@ jobs:
         with:
           args: zip -r ./snes9x_libretro.so.zip ./libretro/snes9x_libretro.so
 
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - run: make -C libretro -j4
+
+      - name: ZIP Release
+        uses: montudor/action-zip@v0.1.0
+        with:
+          args: zip -r ./snes9x_libretro.so.zip ./libretro/snes9x_libretro.so
+
+
           #      - name: Create Release
           #        id: create_release
           #        uses: actions/create-release@v1
