@@ -9,7 +9,7 @@ defaults:
     shell: bash
 
 jobs:
-  build_linux:
+  linux_x86_64:
     runs-on: ubuntu-latest
 
     steps:
@@ -41,7 +41,40 @@ jobs:
           asset_name: snes9x_libretro.so.zip
           asset_content_type: application/zip
 
-  build_osx:
+  linux_armv7_neon:
+    runs-on: ubuntu-latest
+    container: dockcross/linux-armv7
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - run: make -C libretro platform=unix-armv7-neon-hardfloat -j4
+
+      - name: ZIP Release
+        uses: papeloto/action-zip@v1
+        with:
+          files: libretro/snes9x_libretro.so
+          dest: snes9x_libretro.so.zip
+
+      - name: Get release
+        id: get_release
+        uses: bruceadams/get-release@v1.2.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          asset_path: snes9x_libretro.so.zip
+          asset_name: snes9x_libretro.so.zip
+          asset_content_type: application/zip
+
+  osx:
     runs-on: macos-latest
 
     steps:
@@ -73,7 +106,7 @@ jobs:
           asset_name: snes9x_libretro.dylib.zip
           asset_content_type: application/zip
 
-  build_windows:
+  windows:
     runs-on: windows-latest
 
     steps:
