@@ -5,6 +5,12 @@ name: CD
 #    tags:
 #      - "v*"
 
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
 defaults:
   run:
     shell: bash
