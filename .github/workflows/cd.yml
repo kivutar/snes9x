@@ -1,9 +1,8 @@
 name: CD
 
 on:
-  push:
-    tags:
-      - "v*"
+  release:
+    types: [created]
 
 defaults:
   run:
@@ -26,13 +25,18 @@ jobs:
           files: libretro/snes9x_libretro.so
           dest: snes9x_libretro.so.zip
 
+      - name: Get release
+        id: get_release
+        uses: bruceadams/get-release@v1.2.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Upload Release Asset
-        id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
           asset_path: snes9x_libretro.so.zip
           asset_name: snes9x_libretro.so.zip
           asset_content_type: application/zip
@@ -53,13 +57,18 @@ jobs:
           files: libretro/snes9x_libretro.dylib
           dest: snes9x_libretro.dylib.zip
 
+      - name: Get release
+        id: get_release
+        uses: bruceadams/get-release@v1.2.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Upload Release Asset
-        id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
           asset_path: snes9x_libretro.dylib.zip
           asset_name: snes9x_libretro.dylib.zip
           asset_content_type: application/zip
@@ -80,13 +89,18 @@ jobs:
           files: libretro/snes9x_libretro.dll
           dest: snes9x_libretro.dll.zip
 
+      - name: Get release
+        id: get_release
+        uses: bruceadams/get-release@v1.2.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Upload Release Asset
-        id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
           asset_path: snes9x_libretro.dll.zip
           asset_name: snes9x_libretro.dll.zip
           asset_content_type: application/zip
