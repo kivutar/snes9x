@@ -3,10 +3,6 @@ name: CD
 on:
   release:
     types: [created]
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
 
 defaults:
   run:
@@ -42,7 +38,7 @@ jobs:
         with:
           upload_url: ${{ steps.get_release.outputs.upload_url }}
           asset_path: snes9x_libretro.so.zip
-          asset_name: snes9x_linux-86_64.zip
+          asset_name: snes9x_linux-x86_64.zip
           asset_content_type: application/zip
 
   build_linux_armv7_neon:
@@ -141,4 +137,3 @@ jobs:
           asset_path: snes9x_libretro.dll.zip
           asset_name: snes9x_windows-x86_64.zip
           asset_content_type: application/zip
-
