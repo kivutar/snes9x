@@ -64,8 +64,6 @@ jobs:
           files: libretro/snes9x_libretro.dll
           dest: snes9x_libretro.dll.zip
 
-  release:
-    steps:
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
