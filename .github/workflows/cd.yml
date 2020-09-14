@@ -9,7 +9,7 @@ defaults:
     shell: bash
 
 jobs:
-  linux_x86_64:
+  build_linux:
     runs-on: ubuntu-latest
 
     steps:
@@ -38,10 +38,10 @@ jobs:
         with:
           upload_url: ${{ steps.get_release.outputs.upload_url }}
           asset_path: snes9x_libretro.so.zip
-          asset_name: snes9x_libretro.so.zip
+          asset_name: snes9x_linux-86_64.zip
           asset_content_type: application/zip
 
-  linux_armv7_neon:
+  build_linux_armv7_neon:
     runs-on: ubuntu-latest
     container: dockcross/linux-armv7
 
@@ -71,10 +71,10 @@ jobs:
         with:
           upload_url: ${{ steps.get_release.outputs.upload_url }}
           asset_path: snes9x_libretro.so.zip
-          asset_name: snes9x_libretro.so.zip
+          asset_name: snes9x_linux-armv7-neon.zip
           asset_content_type: application/zip
 
-  osx:
+  build_osx:
     runs-on: macos-latest
 
     steps:
@@ -103,10 +103,10 @@ jobs:
         with:
           upload_url: ${{ steps.get_release.outputs.upload_url }}
           asset_path: snes9x_libretro.dylib.zip
-          asset_name: snes9x_libretro.dylib.zip
+          asset_name: snes9x_osx-x86_64.zip
           asset_content_type: application/zip
 
-  windows:
+  build_windows:
     runs-on: windows-latest
 
     steps:
@@ -135,6 +135,6 @@ jobs:
         with:
           upload_url: ${{ steps.get_release.outputs.upload_url }}
           asset_path: snes9x_libretro.dll.zip
-          asset_name: snes9x_libretro.dll.zip
+          asset_name: snes9x_windows-x86_64.zip
           asset_content_type: application/zip
 
